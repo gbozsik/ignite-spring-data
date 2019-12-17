@@ -11,10 +11,10 @@ public class IgniteJDBC {
 
         Class.forName("org.apache.ignite.IgniteJdbcThinDriver");
 
-        Connection conn = DriverManager.getConnection("jdbc:ignite:thin://192.168.2.29:10800");
+        Connection conn = DriverManager.getConnection("jdbc:ignite:thin://192.168.2.29:10801");
 
-        createDatabaseTables(conn);
-
+//        createDatabaseTables(conn);
+//
         insertData(conn);
 
         getData(conn);
@@ -24,7 +24,7 @@ public class IgniteJDBC {
 
         Statement sql = conn.createStatement();
         sql.executeUpdate("CREATE TABLE Employee (" +
-                " id INTEGER PRIMARY KEY, name VARCHAR, isEmployed timyint(1)) " +
+                " id INTEGER PRIMARY KEY, name VARCHAR, isEmployed INTEGER(1)) " +
                 " WITH \"template=replicated\"");
 
         sql.executeUpdate("CREATE INDEX idx_employee_name ON Employee (name)");
@@ -34,13 +34,13 @@ public class IgniteJDBC {
 
         PreparedStatement sql =
                 conn.prepareStatement("INSERT INTO Employee (id, name, isEmployed) VALUES (?, ?, ?)");
-        sql.setLong(1, 1);
-        sql.setString(2, "James");
+        sql.setLong(1, 3);
+        sql.setString(2, "Jamy");
         sql.setBoolean(3, true);
         sql.executeUpdate();
 
-        sql.setLong(1, 2);
-        sql.setString(2, "Monica");
+        sql.setLong(1, 4);
+        sql.setString(2, "Monicsi");
         sql.setBoolean(3, false);
         sql.executeUpdate();
     }

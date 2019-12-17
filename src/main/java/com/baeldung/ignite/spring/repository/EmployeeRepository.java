@@ -7,7 +7,7 @@ import org.apache.ignite.springdata20.repository.config.RepositoryConfig;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryConfig(cacheName = "baeldungCache")
+@RepositoryConfig(cacheName = "employeeCache")
 public interface EmployeeRepository extends IgniteRepository<EmployeeDTO, Integer> {
 
 //    @Query(value = "select c from employee_dto")

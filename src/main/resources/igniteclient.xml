@@ -16,34 +16,12 @@
         <property name="rebalanceThreadPoolSize" value="1"/>
         <property name="metricsLogFrequency" value="0"/>
         <property name="clientMode" value="true"/>
-<!--        <property name="igniteInstanceName" value="igniteClient"/>-->
+        <!--        <property name="igniteInstanceName" value="igniteClient"/>-->
         <property name="activeOnStart" value="true"/>
         <property name="binaryConfiguration">
             <bean class="org.apache.ignite.configuration.BinaryConfiguration">
                 <property name="compactFooter" value="false"/>
             </bean>
-        </property>
-
-        <property name="cacheConfiguration">
-            <list>
-                <!-- Partitioned cache example configuration (Atomic mode). -->
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="datasetWrapperCache"/>
-                    <property name="atomicityMode" value="ATOMIC"/>
-                    <property name="backups" value="0"/>
-                    <property name="copyOnRead" value="false"></property>
-                    <property name="eagerTtl" value="true"></property>
-                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
-                </bean>
-                <bean class="org.apache.ignite.configuration.CacheConfiguration">
-                    <property name="name" value="employeeCache"/>
-                    <property name="atomicityMode" value="ATOMIC"/>
-                    <property name="backups" value="0"/>
-                    <property name="copyOnRead" value="false"></property>
-                    <property name="eagerTtl" value="true"></property>
-                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
-                </bean>
-            </list>
         </property>
 
         <!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
@@ -57,7 +35,7 @@
                         <property name="addresses">
                             <list>
                                 <!-- In distributed environment, replace with actual host IP address. -->
-                                <value>127.0.0.1:47500..47509</value>
+                                <value>192.168.2.29:47500</value>
                             </list>
                         </property>
                     </bean>
@@ -65,71 +43,105 @@
             </bean>
         </property>
 
-        <property name="dataStorageConfiguration">
-            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
-                <property name="dataRegionConfigurations">
-                    <list>
-                        <!--
-                            Defining a data region that will consume up to 500 MB of RAM and
-                            will have eviction and persistence enabled.
-                        -->
-                        <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
-                            <!-- Custom region name. -->
-                            <property name="name" value="MyDataRegionConfiguration"/>
-
-                            <!-- 100 MB initial size. -->
-                            <property name="initialSize" value="#{100L * 1000 * 1000}"/>
-
-                            <!-- 500 MB maximum size. -->
-                            <property name="maxSize" value="#{20000L * 1000 * 1000}"/>
-
-                            <!-- Enabling persistence for the region. -->
-                            <property name="persistenceEnabled" value="true"/>
-                        </bean>
-                    </list>
-                </property>
+        <property name="cacheConfiguration">
+            <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                <!-- Set a cache name. -->
+                <property name="name" value="cacheName"/>
+                <!-- Set cache mode. -->
+                <property name="cacheMode" value="PARTITIONED"/>
+                <!-- Other cache configurations. -->
             </bean>
         </property>
+        <!--        <property name="dataStorageConfiguration">-->
+        <!--            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">-->
+        <!--                <property name="dataRegionConfigurations">-->
+        <!--                    <list>-->
+        <!--                        &lt;!&ndash;-->
+        <!--                            Defining a data region that will consume up to 500 MB of RAM and-->
+        <!--                            will have eviction and persistence enabled.-->
+        <!--                        &ndash;&gt;-->
+        <!--                        <bean class="org.apache.ignite.configuration.DataRegionConfiguration">-->
+        <!--                            &lt;!&ndash; Custom region name. &ndash;&gt;-->
+        <!--                            <property name="name" value="MyDataRegionConfiguration"/>-->
 
-<!--        <property name="memoryConfiguration">-->
-<!--            <bean class="org.apache.ignite.configuration.MemoryConfiguration">-->
-<!--                &lt;!&ndash; Setting a name of the default memory policy. Required to set only if the default policy's-->
-<!--                    parameters are overridden like it's done below. &ndash;&gt;-->
-<!--                <property name="defaultMemoryPolicyName" value="Default_Region"/>-->
+        <!--                            &lt;!&ndash; 100 MB initial size. &ndash;&gt;-->
+        <!--                            <property name="initialSize" value="#{100L * 1000 * 1000}"/>-->
 
-<!--                &lt;!&ndash; Defining several memory policies for different memory regions &ndash;&gt;-->
-<!--                <property name="memoryPolicies">-->
-<!--                    <list>-->
-<!--                        &lt;!&ndash;-->
-<!--                            Memory region of 40 MBs in size with an eviction enabled.-->
-<!--                        &ndash;&gt;-->
-<!--                        <bean class="org.apache.ignite.configuration.MemoryPolicyConfiguration">-->
-<!--                            <property name="name" value="Default_Region"/>-->
-<!--                            &lt;!&ndash; Memory region of 20 MB initial size. &ndash;&gt;-->
-<!--                            <property name="initialSize" value="#{10 * 1024 * 1024}"/>-->
-<!--                            &lt;!&ndash; Maximum size is 40 MB. &ndash;&gt;-->
-<!--                            <property name="maxSize" value="#{20 * 1024 * 1024}"/>-->
+        <!--                            &lt;!&ndash; 500 MB maximum size. &ndash;&gt;-->
+        <!--                            <property name="maxSize" value="#{20000L * 1000 * 1000}"/>-->
 
-<!--                        </bean>-->
+        <!--                            &lt;!&ndash; Enabling persistence for the region. &ndash;&gt;-->
+        <!--                            <property name="persistenceEnabled" value="true"/>-->
+        <!--                        </bean>-->
+        <!--                    </list>-->
+        <!--                </property>-->
+        <!--            </bean>-->
+        <!--        </property>-->
 
-<!--                    </list>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </property>-->
+        <!--         <property name="cacheConfiguration">-->
+        <!--            <list>-->
+        <!--                 Partitioned cache example configuration (Atomic mode). -->
+        <!--                <bean class="org.apache.ignite.configuration.CacheConfiguration">-->
+        <!--                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>-->
+        <!--                    <property name="name" value="datasetWrapperCache"/>-->
+        <!--                    <property name="atomicityMode" value="ATOMIC"/>-->
+        <!--                    <property name="backups" value="1"/>-->
+        <!--                    <property name="copyOnRead" value="false"></property>-->
+        <!--                    <property name="eagerTtl" value="true"></property>-->
+        <!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
+        <!--                </bean>-->
+        <!--                <bean class="org.apache.ignite.configuration.CacheConfiguration">-->
+        <!--                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>-->
+        <!--                    <property name="name" value="employeeCache"/>-->
+        <!--                    <property name="atomicityMode" value="ATOMIC"/>-->
+        <!--                    <property name="backups" value="0"/>-->
+        <!--                    <property name="copyOnRead" value="false"></property>-->
+        <!--                    <property name="eagerTtl" value="true"></property>-->
+        <!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
+        <!--                </bean>-->
+        <!--            </list>-->
+        <!--        </property>-->
+
+
+        <!--        <property name="memoryConfiguration">-->
+        <!--            <bean class="org.apache.ignite.configuration.MemoryConfiguration">-->
+        <!--                &lt;!&ndash; Setting a name of the default memory policy. Required to set only if the default policy's-->
+        <!--                    parameters are overridden like it's done below. &ndash;&gt;-->
+        <!--                <property name="defaultMemoryPolicyName" value="Default_Region"/>-->
+
+        <!--                &lt;!&ndash; Defining several memory policies for different memory regions &ndash;&gt;-->
+        <!--                <property name="memoryPolicies">-->
+        <!--                    <list>-->
+        <!--                        &lt;!&ndash;-->
+        <!--                            Memory region of 40 MBs in size with an eviction enabled.-->
+        <!--                        &ndash;&gt;-->
+        <!--                        <bean class="org.apache.ignite.configuration.MemoryPolicyConfiguration">-->
+        <!--                            <property name="name" value="Default_Region"/>-->
+        <!--                            &lt;!&ndash; Memory region of 20 MB initial size. &ndash;&gt;-->
+        <!--                            <property name="initialSize" value="#{10 * 1024 * 1024}"/>-->
+        <!--                            &lt;!&ndash; Maximum size is 40 MB. &ndash;&gt;-->
+        <!--                            <property name="maxSize" value="#{20 * 1024 * 1024}"/>-->
+
+        <!--                        </bean>-->
+
+        <!--                    </list>-->
+        <!--                </property>-->
+        <!--            </bean>-->
+        <!--        </property>-->
 
 
     </bean>
 
-    <bean id="connectorConfigurationBean" class="org.apache.ignite.configuration.ConnectorConfiguration">
-        <property name="port" value="11213"/>
-        <!-- <property name="sslEnabled" value="true"/>
-         <property name="sslFactory">
-             <bean class="org.apache.ignite.ssl.SslContextFactory">
-                 <property name="keyStoreFilePath" value="${KEYSTORE_PATH}"/>
-                 <property name="keyStorePassword" value="${KEYSTORE_PASSWORD}"/>
-                 <property name="trustStoreFilePath" value="${TRUSTSTORE_PATH}"/>
-                 <property name="trustStorePassword" value="${TRUSTSTORE_PASSWORD}"/>
-             </bean>
-         </property>-->
-    </bean>
+    <!--    <bean id="connectorConfigurationBean" class="org.apache.ignite.configuration.ConnectorConfiguration">-->
+    <!--        <property name="port" value="11212"/>-->
+    <!-- <property name="sslEnabled" value="true"/>
+     <property name="sslFactory">
+         <bean class="org.apache.ignite.ssl.SslContextFactory">
+             <property name="keyStoreFilePath" value="${KEYSTORE_PATH}"/>
+             <property name="keyStorePassword" value="${KEYSTORE_PASSWORD}"/>
+             <property name="trustStoreFilePath" value="${TRUSTSTORE_PATH}"/>
+             <property name="trustStorePassword" value="${TRUSTSTORE_PASSWORD}"/>
+         </bean>
+     </property>-->
+    <!--    </bean>-->
 </beans>

@@ -46,9 +46,10 @@
         <property name="cacheConfiguration">
             <bean class="org.apache.ignite.configuration.CacheConfiguration">
                 <!-- Set a cache name. -->
-                <property name="name" value="cacheName"/>
+                <property name="name" value="clientcache"/>
                 <!-- Set cache mode. -->
                 <property name="cacheMode" value="PARTITIONED"/>
+<!--                <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
                 <!-- Other cache configurations. -->
             </bean>
         </property>

@@ -6,6 +6,7 @@ import org.apache.ignite.springdata20.repository.config.RepositoryConfig;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.crypto.Data;
+import java.util.List;
 
 @Repository
 @RepositoryConfig(cacheName = "datasetWrapperCache")

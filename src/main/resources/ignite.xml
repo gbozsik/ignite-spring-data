@@ -75,8 +75,14 @@
                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
                     <!--                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>-->
                     <property name="name" value="datasetWrapperCache"/>
+                    <property name="cacheMode" value="PARTITIONED"/>
+                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>
+                    <property name="atomicityMode" value="ATOMIC"/>
+                    <property name="backups" value="1"/>
+                    <property name="copyOnRead" value="false"/>
+                    <property name="eagerTtl" value="true"/>
+<!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
                     <property name="queryEntities">
-
                         <bean class="org.apache.ignite.cache.QueryEntity">
                             <!-- Setting indexed type's key class -->
                             <property name="keyType" value="java.lang.Long"/>
@@ -86,19 +92,6 @@
                                     <entry key="id" value="java.lang.Long"/>
                                 </map>
                             </property>
-                            <!--                    <property name="indexedTypes">-->
-                            <!--                        <list>-->
-                            <!--                        <value>java.lang.Long</value>-->
-                            <!--&lt;!&ndash;                        <value>com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper</value>&ndash;&gt;-->
-                            <!--                        <value>com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper</value>-->
-                            <!--                        </list>-->
-                            <!--                    </property>-->
-                            <!--                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>-->
-                            <!--                    <property name="atomicityMode" value="ATOMIC"/>-->
-                            <!--                    <property name="backups" value="1"/>-->
-                            <!--                    <property name="copyOnRead" value="false"></property>-->
-                            <!--                    <property name="eagerTtl" value="true"></property>-->
-                            <!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
                         </bean>
                     </property>
                 </bean>
@@ -114,8 +107,8 @@
             </list>
         </property>
 
-        <!--        <property name="memoryConfiguration">-->
-        <!--            <bean class="org.apache.ignite.configuration.MemoryConfiguration">-->
+<!--                <property name="memoryConfiguration">-->
+<!--                    <bean class="org.apache.ignite.configuration.MemoryConfiguration">-->
         <!--                &lt;!&ndash; Setting a name of the default memory policy. Required to set only if the default policy's-->
         <!--                    parameters are overridden like it's done below. &ndash;&gt;-->
         <!--                <property name="defaultMemoryPolicyName" value="Default_Region"/>-->
@@ -136,9 +129,9 @@
         <!--                        </bean>-->
 
         <!--                    </list>-->
-        <!--                </property>-->
-        <!--            </bean>-->
-        <!--        </property>-->
+<!--                        </property>-->
+<!--                    </bean>-->
+<!--                </property>-->
 
 
     </bean>

@@ -139,9 +139,9 @@ public class SpringDataConfig {
         // only if you manually activate the cluster for the very first time.
         ignite.cluster().active(true);
 //	    /*// Get all server nodes that are already up and running.
-	    Collection<ClusterNode> nodes = ignite.cluster().forServers().nodes();
+//	    Collection<ClusterNode> nodes = ignite.cluster().forServers().nodes();
         // Set the baseline topology that is represented by these nodes.
-	    ignite.cluster().setBaselineTopology(nodes);
+//	    ignite.cluster().setBaselineTopology(nodes);
         return ignite;
     }
 

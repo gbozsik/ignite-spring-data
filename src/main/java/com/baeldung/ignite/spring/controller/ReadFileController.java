@@ -31,6 +31,11 @@ public class ReadFileController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping(value = "readallfromcache")
+    public ResponseEntity<Iterable<DatasetWrapper>> readAllFromCache() {
+        return new ResponseEntity<>(datasetWrapperService.readAllFromCache(), HttpStatus.OK);
+    }
+
 //    @GetMapping(value = "/playPerson")
 //    public ResponseEntity<String> playWithPerson() {
 //        datasetWrapperService.playWithPerson();

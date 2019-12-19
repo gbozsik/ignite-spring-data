@@ -1,5 +1,9 @@
 package com.baeldung.ignite.spring.converter;
 
+import com.baeldung.ignite.spring.service.ConversionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,29 +12,37 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class JolConverter {
+
+	@Autowired
+	private ConversionService conversionService;
 
     private JolConverter() {
     }
 
-    public static List<String[]> readFromFile() {
+    public List<String[]> readFromFile(String filepath) {
+    	filepath = filepath.replace("\\", "/");
+    	String[] splitFilePath = filepath.split("/");
+        String fileName = splitFilePath[splitFilePath.length-2];
         List<String[]> splittedLineList = new ArrayList<>();
         BufferedReader reader;
-//		LocalDateTime startTime = LocalDateTime.now();
 		try {
 
 			reader = new BufferedReader(new FileReader(
-					"/home/gbozsik/Documents/Artisjus/DeezerWorldwidePremiumPlusStandalone_20160301_20160331_HU_matched.jol"));
+					filepath));
+			long iterations = 0;
 			String line = reader.readLine();
 			while (line != null) {
 				String[] splittedLine = line.split("\\|", -1);
+				conversionService.streamToCache(line, fileName, iterations);
 //				dumpSplittedLine(splittedLine);
 //				createDatasetWrapper(splittedLine);
 				splittedLineList.add(splittedLine);
 				line = reader.readLine();
 			}
-//			Duration duration = Duration.between(startTime, LocalDateTime.now());
-//			System.out.println("File read Time: " + duration);
+//
+//			reader.reset();
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();

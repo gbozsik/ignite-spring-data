@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.io.Serializable;
@@ -44,6 +45,9 @@ public class ResArtistJolModel implements Serializable {
     public static final String BLOCK_ID = "blockId";
     public static final String DISPLAY_ARTIST_NAME = "displayArtistName";
 
+//    @AffinityKeyMapped
+    @QuerySqlField(index = true)
+    private String fileId;
     @QuerySqlField(index = true)
     private String blockId;
     @QuerySqlField

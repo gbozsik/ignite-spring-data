@@ -7,4 +7,6 @@ public interface DatasetWrapperService {
     void insertDatasetWrapper();
 
     DatasetWrapper readFromCache();
+
+    Iterable<DatasetWrapper> readAllFromCache();
 }

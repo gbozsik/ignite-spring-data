@@ -6,6 +6,7 @@ import com.baeldung.ignite.spring.repository.EmployeeRepository;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
+import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.cluster.ClusterNode;
 import org.apache.ignite.configuration.BinaryConfiguration;
 import org.apache.ignite.configuration.CacheConfiguration;
@@ -29,20 +30,20 @@ import java.util.Collection;
 @ComponentScan(basePackages = "com.baeldung.ignite.spring.repository")
 public class SpringDataConfig {
 
-    private static final String DATA_CONFIG_NAME = "MyDataRegionConfiguration";
+    private static final String DATA_CONFIG_NAME = "MyDataRegionConfigurationFromCode";
     private static final String IGNITE_PERSISTENCE_FILE_PATH = "/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/data/";
 
     @Bean
     public IgniteConfiguration igniteConfiguration() {
         IgniteConfiguration igniteConfiguration = getBaseigniteConf();
-//        CacheConfiguration datasetWrapperCache = getCache("datasetWrapperCache");
-//        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
-        igniteConfiguration.setClientMode(true);
+        CacheConfiguration datasetWrapperCache = getCache("clientServerCache");
+        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
+        igniteConfiguration.setClientMode(false);
         igniteConfiguration.setIgniteInstanceName("ignite");
         TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
         TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder();
         // need to be changed when it come to real cluster
-        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.29:47500"));
+        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.29:47500..47501"));
         tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
         igniteConfiguration.setDiscoverySpi(tcpDiscoverySpi);
         return igniteConfiguration;
@@ -62,7 +63,7 @@ public class SpringDataConfig {
         DataRegionConfiguration dataRegionConfiguration = new DataRegionConfiguration();
         dataRegionConfiguration.setName(DATA_CONFIG_NAME);
         dataRegionConfiguration.setInitialSize(100L * 1000 * 1000);
-        dataRegionConfiguration.setMaxSize(20000L * 1000 * 1000);
+        dataRegionConfiguration.setMaxSize(200L * 1000 * 1000);
 //        dataRegionConfiguration.setPersistenceEnabled(true);
         dataStorageConfiguration.setDataRegionConfigurations(dataRegionConfiguration);
         DataStorageConfiguration dataStorageConfiguration_2 = new DataStorageConfiguration();
@@ -124,9 +125,10 @@ public class SpringDataConfig {
         return igniteConfiguration;
     }
 
-    private CacheConfiguration getCache(String cacheName) {
+    public CacheConfiguration getCache(String cacheName) {
         CacheConfiguration datasetWrapperCache = new CacheConfiguration(cacheName);
         datasetWrapperCache.setIndexedTypes(Long.class, DatasetWrapper.class);
+        datasetWrapperCache.setCacheMode(CacheMode.PARTITIONED);
         return datasetWrapperCache;
     }
 

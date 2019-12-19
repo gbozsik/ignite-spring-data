@@ -24,6 +24,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.io.Serializable;
 
@@ -47,6 +49,11 @@ public class ResIsrcJolModel implements Serializable {
     public static final String BLOCK_ID = "blockId";
     public static final String ISRC_CODE = "isrc";
 
+//    @AffinityKeyMapped
+    @QuerySqlField(index = true)
+    private String fileId;
+    @QuerySqlField
     private String blockId;
+    @QuerySqlField
     private String isrc;
 }

@@ -68,7 +68,7 @@ public class ResourceTxModel extends TxJolModel {
      * @param tx az os
      */
     public ResourceTxModel(final TxJolModel tx) {
-        super(tx.getBlockId(),tx.getTransactionId(),tx.getUsages(),tx.getReturns(), tx.getNetRevenue(),
+        super(tx.getFileId(), tx.getBlockId(),tx.getTransactionId(),tx.getUsages(),tx.getReturns(), tx.getNetRevenue(),
                 tx.getGrossRevenue(),tx.getPriceConsumerPaidExcSalesTax(), tx.getFreeUnits(), tx.getEfdTxId());
     }
 

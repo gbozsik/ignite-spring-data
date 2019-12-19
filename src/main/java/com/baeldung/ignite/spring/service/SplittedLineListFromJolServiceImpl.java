@@ -8,8 +8,10 @@ import java.util.List;
 @Service
 public class SplittedLineListFromJolServiceImpl implements SplittedLineListService {
 
+    JolConverter jolConverter;
+
     @Override
-    public List<String[]> getSplittedlineList() {
-        return JolConverter.readFromFile();
+    public List<String[]> getSplittedlineList(String filepath) {
+        return jolConverter.readFromFile(filepath);
     }
 }

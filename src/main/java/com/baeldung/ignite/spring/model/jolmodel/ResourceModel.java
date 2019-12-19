@@ -19,7 +19,10 @@
 package com.baeldung.ignite.spring.model.jolmodel;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.util.List;
@@ -35,6 +38,8 @@ import java.util.Objects;
  *
  * @author Szentes Szabolcs
  */
+@Getter
+@Setter
 @ToString
 public class ResourceModel extends ResJolModel {
 
@@ -79,7 +84,10 @@ public class ResourceModel extends ResJolModel {
     public static final String REL_USAGE_SHARE = "relUsageShare";
     public static final String USAGE_SHARE = "usageShare";
 
+//    @AffinityKeyMapped
     @QuerySqlField(index = true)
+    private String fileId;
+    @QuerySqlField
     private String workGroupId;
     @QuerySqlField
     private String enrichedISWC;

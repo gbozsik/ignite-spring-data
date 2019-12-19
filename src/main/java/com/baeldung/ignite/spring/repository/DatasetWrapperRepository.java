@@ -13,4 +13,6 @@ import java.util.List;
 public interface DatasetWrapperRepository extends IgniteRepository<DatasetWrapper, Long> {
 
         DatasetWrapper getDatasetWrapperById(Long id);
+
+        Iterable<DatasetWrapper> findAll();
 }

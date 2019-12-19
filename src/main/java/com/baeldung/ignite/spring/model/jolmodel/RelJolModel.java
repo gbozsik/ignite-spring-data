@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Tolerate;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.io.Serializable;
@@ -57,7 +58,10 @@ public class RelJolModel implements Serializable {
     public static final String RELEASE_TYPE = "releaseType";
     public static final String PLINE = "pline";
 
+//    @AffinityKeyMapped
     @QuerySqlField(index = true)
+    private String fileId;
+    @QuerySqlField
     private String blockId;
     @QuerySqlField
     private String proprietaryId;

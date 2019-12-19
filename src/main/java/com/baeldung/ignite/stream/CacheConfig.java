@@ -1,6 +1,8 @@
 package com.baeldung.ignite.stream;
 
 import com.baeldung.ignite.model.Employee;
+import com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper;
+import org.apache.ignite.cache.CacheMode;
 import org.apache.ignite.configuration.CacheConfiguration;
 
 import javax.cache.configuration.FactoryBuilder;
@@ -16,6 +18,18 @@ public class CacheConfig {
         CacheConfiguration<Integer, Employee> config = new CacheConfiguration<>("baeldungEmployees");
 
         config.setIndexedTypes(Integer.class, Employee.class);
+        config.setExpiryPolicyFactory(FactoryBuilder.factoryOf(
+                new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 5))));
+
+        return config;
+    }
+
+    public static CacheConfiguration<Long, DatasetWrapper> datasetWrapperCache() {
+
+        CacheConfiguration<Long, DatasetWrapper> config = new CacheConfiguration<>("datasetCache");
+
+        config.setIndexedTypes(Long.class, DatasetWrapper.class);
+        config.setCacheMode(CacheMode.PARTITIONED);
         config.setExpiryPolicyFactory(FactoryBuilder.factoryOf(
                 new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 5))));
 

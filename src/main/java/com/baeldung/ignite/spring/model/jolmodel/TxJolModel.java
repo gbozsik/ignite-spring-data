@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ignite.cache.affinity.AffinityKeyMapped;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.io.Serializable;
@@ -58,7 +59,10 @@ public class TxJolModel implements Serializable {
     public static final String FREE_UNITS = "freeUnits";
     public static final String EFD_TX_ID = "efdTxId";
 
+//    @AffinityKeyMapped
     @QuerySqlField(index = true)
+    private String fileId;
+    @QuerySqlField
     protected String blockId;
     @QuerySqlField
     protected String transactionId;

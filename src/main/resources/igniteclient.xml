@@ -6,7 +6,7 @@
 
 
         <!-- Set to true to enable grid-aware class loading for examples, default is false. -->
-        <property name="peerClassLoadingEnabled" value="false"/>
+        <property name="peerClassLoadingEnabled" value="true"/>
         <property name="publicThreadPoolSize" value="2"/>
         <property name="systemThreadPoolSize" value="2"/>
         <property name="asyncCallbackPoolSize" value="2"/>
@@ -38,7 +38,7 @@
                             <list>
                                 <!-- In distributed environment, replace with actual host IP address. -->
 <!--                                <value>192.168.2.29:47500..47501</value>-->
-                                <value>127.0.0.1:47500..47509</value>
+                                <value>192.168.2.28:47500..47509</value>
                             </list>
                         </property>
                     </bean>

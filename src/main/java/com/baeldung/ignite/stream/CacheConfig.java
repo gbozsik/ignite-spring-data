@@ -8,6 +8,7 @@ import org.apache.ignite.configuration.CacheConfiguration;
 import javax.cache.configuration.FactoryBuilder;
 import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,9 +25,9 @@ public class CacheConfig {
         return config;
     }
 
-    public static CacheConfiguration<Long, DatasetWrapper> datasetWrapperCache() {
+    public static CacheConfiguration<Long, List<DatasetWrapper>> datasetWrapperCache() {
 
-        CacheConfiguration<Long, DatasetWrapper> config = new CacheConfiguration<>("datasetCache");
+        CacheConfiguration<Long, List<DatasetWrapper>> config = new CacheConfiguration<>("datasetCache");
 
         config.setIndexedTypes(Long.class, DatasetWrapper.class);
         config.setCacheMode(CacheMode.PARTITIONED);

@@ -6,8 +6,10 @@ import org.apache.ignite.springdata20.repository.IgniteRepository;
 import org.apache.ignite.springdata20.repository.config.RepositoryConfig;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 @RepositoryConfig(cacheName = "datasetWrapper2Cache2")
-public interface DatasetWrapper2Repository extends IgniteRepository<DatasetWrapper2, String> {
+public interface DatasetWrapper2Repository extends IgniteRepository<List<DatasetWrapper2>, String> {
 }

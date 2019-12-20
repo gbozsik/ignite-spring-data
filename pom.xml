@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.ginite.inmemory</groupId>
-    <artifactId>ignite.in.memory</artifactId>
+    <groupId>com.ginite.spring.data</groupId>
+    <artifactId>ignite.spring.data</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ignite.in.memory</name>
-    <description>ignite.in.memory</description>
+    <name>ignite.spring.data</name>
+    <description>ignite.spring.data.poc</description>
 
 
     <dependencies>

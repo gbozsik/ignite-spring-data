@@ -6,7 +6,7 @@
 
 
         <!-- Set to true to enable grid-aware class loading for examples, default is false. -->
-        <property name="peerClassLoadingEnabled" value="false"/>
+        <property name="peerClassLoadingEnabled" value="true"/>
         <property name="publicThreadPoolSize" value="2"/>
         <property name="systemThreadPoolSize" value="2"/>
         <property name="asyncCallbackPoolSize" value="2"/>
@@ -62,7 +62,7 @@
                             <property name="maxSize" value="#{20000L * 1000 * 1000}"/>
 
                             <!-- Enabling persistence for the region. -->
-                            <property name="persistenceEnabled" value="true"/>
+                            <property name="persistenceEnabled" value="false"/>
                         </bean>
                     </list>
                 </property>
@@ -81,7 +81,7 @@
                     <property name="backups" value="1"/>
                     <property name="copyOnRead" value="false"/>
                     <property name="eagerTtl" value="true"/>
-<!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
+                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
                     <property name="queryEntities">
                         <bean class="org.apache.ignite.cache.QueryEntity">
                             <!-- Setting indexed type's key class -->

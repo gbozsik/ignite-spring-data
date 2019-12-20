@@ -9,7 +9,5 @@ public interface ConversionService {
 
     <T> T getLineInDataModel(String line, String fileId, long iterations);
 
-    void streamToCache();
-
     void streamToCache(String line, String fileName, long iterations);
 }

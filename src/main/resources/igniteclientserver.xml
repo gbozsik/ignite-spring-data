@@ -6,7 +6,7 @@
 
 
         <!-- Set to true to enable grid-aware class loading for examples, default is false. -->
-        <property name="peerClassLoadingEnabled" value="false"/>
+        <property name="peerClassLoadingEnabled" value="true"/>
         <property name="publicThreadPoolSize" value="2"/>
         <property name="systemThreadPoolSize" value="2"/>
         <property name="asyncCallbackPoolSize" value="2"/>
@@ -16,7 +16,7 @@
         <property name="rebalanceThreadPoolSize" value="1"/>
         <property name="metricsLogFrequency" value="0"/>
         <property name="clientMode" value="false"/>
-        <property name="igniteInstanceName" value="ignite"/>
+        <property name="igniteInstanceName" value="igniteApp"/>
         <property name="activeOnStart" value="true"/>
         <property name="binaryConfiguration">
             <bean class="org.apache.ignite.configuration.BinaryConfiguration">
@@ -35,7 +35,7 @@
                         <property name="addresses">
                             <list>
                                 <!-- In distributed environment, replace with actual host IP address. -->
-                                <value>192.168.2.29:47500</value>
+                                <value>192.168.2.28:47500..47501</value>
                             </list>
                         </property>
                     </bean>
@@ -62,7 +62,7 @@
                             <property name="maxSize" value="#{200L * 1000 * 1000}"/>
 
                             <!-- Enabling persistence for the region. -->
-                            <property name="persistenceEnabled" value="true"/>
+                            <property name="persistenceEnabled" value="false"/>
                         </bean>
                     </list>
                 </property>
@@ -74,19 +74,19 @@
                 <!-- Partitioned cache example configuration (Atomic mode). -->
                 <bean class="org.apache.ignite.configuration.CacheConfiguration">
                     <!--                    <property name="dataRegionName" value="MyDataRegionConfiguration"/>-->
-                    <property name="name" value="datasetWrapperCache"/>
+                    <property name="name" value="datasetWrapperCache2"/>
                     <property name="cacheMode" value="PARTITIONED"/>
                     <property name="dataRegionName" value="MyDataRegionConfiguration"/>
                     <property name="atomicityMode" value="ATOMIC"/>
                     <property name="backups" value="1"/>
                     <property name="copyOnRead" value="false"/>
                     <property name="eagerTtl" value="true"/>
-<!--                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>-->
+                    <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
                     <property name="queryEntities">
                         <bean class="org.apache.ignite.cache.QueryEntity">
                             <!-- Setting indexed type's key class -->
-                            <property name="keyType" value="java.lang.Long"/>
-                            <property name="valueType" value="com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper"/>
+                            <property name="keyType" value="java.lang.String"/>
+                            <property name="valueType" value="com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper2"/>
                             <property name="fields">
                                 <map>
                                     <entry key="id" value="java.lang.Long"/>
@@ -107,10 +107,37 @@
             </list>
         </property>
 
+<!--                <property name="memoryConfiguration">-->
+<!--                    <bean class="org.apache.ignite.configuration.MemoryConfiguration">-->
+        <!--                &lt;!&ndash; Setting a name of the default memory policy. Required to set only if the default policy's-->
+        <!--                    parameters are overridden like it's done below. &ndash;&gt;-->
+        <!--                <property name="defaultMemoryPolicyName" value="Default_Region"/>-->
+
+        <!--                &lt;!&ndash; Defining several memory policies for different memory regions &ndash;&gt;-->
+        <!--                <property name="memoryPolicies">-->
+        <!--                    <list>-->
+        <!--                        &lt;!&ndash;-->
+        <!--                            Memory region of 40 MBs in size with an eviction enabled.-->
+        <!--                        &ndash;&gt;-->
+        <!--                        <bean class="org.apache.ignite.configuration.MemoryPolicyConfiguration">-->
+        <!--                            <property name="name" value="Default_Region"/>-->
+        <!--                            &lt;!&ndash; Memory region of 20 MB initial size. &ndash;&gt;-->
+        <!--                            <property name="initialSize" value="#{10 * 1024 * 1024}"/>-->
+        <!--                            &lt;!&ndash; Maximum size is 40 MB. &ndash;&gt;-->
+        <!--                            <property name="maxSize" value="#{20 * 1024 * 1024}"/>-->
+
+        <!--                        </bean>-->
+
+        <!--                    </list>-->
+<!--                        </property>-->
+<!--                    </bean>-->
+<!--                </property>-->
+
+
     </bean>
 
     <bean id="connectorConfigurationBean" class="org.apache.ignite.configuration.ConnectorConfiguration">
-        <property name="port" value="11213"/>
+        <property name="port" value="11214"/>
         <!-- <property name="sslEnabled" value="true"/>
          <property name="sslFactory">
              <bean class="org.apache.ignite.ssl.SslContextFactory">

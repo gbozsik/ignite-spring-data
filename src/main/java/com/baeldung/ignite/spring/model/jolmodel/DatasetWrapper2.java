@@ -1,5 +1,6 @@
 package com.baeldung.ignite.spring.model.jolmodel;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class DatasetWrapper2 implements Serializable {
 
+    @Getter
     @QuerySqlField(index = true)
     private Long id;
     @QuerySqlField

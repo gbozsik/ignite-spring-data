@@ -1,12 +1,14 @@
 package com.baeldung.ignite.spring.config;
 
 import com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper;
+import com.baeldung.ignite.spring.repository.DatasetWrapper2Repository;
 import com.baeldung.ignite.spring.repository.DatasetWrapperRepository;
 import com.baeldung.ignite.spring.repository.EmployeeRepository;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteException;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CacheMode;
+import org.apache.ignite.cache.QueryEntity;
 import org.apache.ignite.cluster.ClusterNode;
 import org.apache.ignite.configuration.BinaryConfiguration;
 import org.apache.ignite.configuration.CacheConfiguration;
@@ -26,11 +28,11 @@ import java.util.Collection;
 
 
 @Configuration
-@EnableIgniteRepositories(basePackageClasses = {EmployeeRepository.class, DatasetWrapperRepository.class})
+@EnableIgniteRepositories(basePackageClasses = {EmployeeRepository.class, DatasetWrapperRepository.class, DatasetWrapper2Repository.class})
 @ComponentScan(basePackages = "com.baeldung.ignite.spring.repository")
 public class SpringDataConfig {
 
-    private static final String DATA_CONFIG_NAME = "MyDataRegionConfigurationFromCode";
+    private static final String DATA_CONFIG_NAME = "MyDataRegionConfiguration";
     private static final String IGNITE_PERSISTENCE_FILE_PATH = "/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/data/";
 
     @Bean
@@ -39,11 +41,11 @@ public class SpringDataConfig {
         CacheConfiguration datasetWrapperCache = getCache("clientServerCache");
         igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
         igniteConfiguration.setClientMode(false);
-        igniteConfiguration.setIgniteInstanceName("ignite");
+        igniteConfiguration.setIgniteInstanceName("igniteInApp");
         TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
         TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder();
-        // need to be changed when it come to real cluster
-        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.29:47500..47501"));
+//         need to be changed when it come to real cluster
+        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.28:47500..47509"));
         tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
         igniteConfiguration.setDiscoverySpi(tcpDiscoverySpi);
         return igniteConfiguration;
@@ -89,7 +91,7 @@ public class SpringDataConfig {
         igniteConfiguration.setSystemThreadPoolSize(2);
         igniteConfiguration.setRebalanceThreadPoolSize(1);
         igniteConfiguration.setAsyncCallbackPoolSize(2);
-        igniteConfiguration.setPeerClassLoadingEnabled(false);
+        igniteConfiguration.setPeerClassLoadingEnabled(true);
         BinaryConfiguration binaryConfiguration = new BinaryConfiguration();
         binaryConfiguration.setCompactFooter(false);
         igniteConfiguration.setBinaryConfiguration(binaryConfiguration);
@@ -127,7 +129,10 @@ public class SpringDataConfig {
 
     public CacheConfiguration getCache(String cacheName) {
         CacheConfiguration datasetWrapperCache = new CacheConfiguration(cacheName);
-        datasetWrapperCache.setIndexedTypes(Long.class, DatasetWrapper.class);
+        datasetWrapperCache.setIndexedTypes(String.class, DatasetWrapper.class);
+        datasetWrapperCache.setDataRegionName(DATA_CONFIG_NAME);
+        QueryEntity queryEntity = new QueryEntity("java.lang.String", "com.baeldung.ignite.spring.model.jolmodel.DatasetWrapper2");
+        datasetWrapperCache.setQueryEntities(Arrays.asList(queryEntity));
         datasetWrapperCache.setCacheMode(CacheMode.PARTITIONED);
         return datasetWrapperCache;
     }
@@ -135,9 +140,9 @@ public class SpringDataConfig {
 
     @Bean(destroyMethod = "close")
     Ignite igniteInstance(IgniteConfiguration igniteConfiguration) throws IgniteException {
-        final Ignite ignite = Ignition.start("/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/src/main/resources/igniteclient.xml");
+        final Ignite ignite = Ignition.start("/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/src/main/resources/igniteclientserver.xml");
 //        final Ignite ignite = Ignition.start(igniteConfiguration);
-        // Activate the cluster. Automatic topology initialization occurs
+//         Activate the cluster. Automatic topology initialization occurs
         // only if you manually activate the cluster for the very first time.
         ignite.cluster().active(true);
 //	    /*// Get all server nodes that are already up and running.
@@ -164,7 +169,7 @@ public class SpringDataConfig {
 //
 //    @Bean(destroyMethod = "close")
 //    Ignite ignite(IgniteConfiguration igniteConfiguration_2) throws IgniteException {
-//        final Ignite ignite_2 = Ignition.start("/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/src/main/resources/igniteclient.xml");
+//        final Ignite ignite_2 = Ignition.start("/home/gbozsik/IdeaProjects/artisjus/poc/ignite-spring-data/src/main/resources/ignite.xml");
 ////        final Ignite ignite_2 = Ignition.start(igniteConfiguration_2);
 //        // Activate the cluster. Automatic topology initialization occurs
 //        // only if you manually activate the cluster for the very first time.

@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 public class IgniteStream {
 
@@ -72,7 +73,7 @@ public class IgniteStream {
 //        Ignite ignite = Ignition.start();
 
 
-        IgniteCache<Long, DatasetWrapper> datasetCache = ignite.getOrCreateCache(CacheConfig.datasetWrapperCache());
+        IgniteCache<Long, List<DatasetWrapper>> datasetCache = ignite.getOrCreateCache(CacheConfig.datasetWrapperCache());
         IgniteDataStreamer<Long, DatasetWrapper> datasetStreamer = ignite.dataStreamer(datasetCache.getName());
         datasetStreamer.allowOverwrite(true);
 
@@ -153,60 +154,60 @@ public class IgniteStream {
     }
 
     private static IgniteConfiguration getIgniteConfiguration() {
-        IgniteConfiguration igniteConfiguration = new IgniteConfiguration();
-//        CacheConfiguration datasetWrapperCache = getCache("datasetWrapperCache");
-//        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
-        igniteConfiguration.setClientMode(true);
-        igniteConfiguration.setIgniteInstanceName("ignite");
-        TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
-        TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder();
-        // need to be changed when it come to real cluster
-        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.29:47500"));
-        tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
-        igniteConfiguration.setDiscoverySpi(tcpDiscoverySpi);
-
-        DataStorageConfiguration dataStorageConfiguration = new DataStorageConfiguration();
-        igniteConfiguration.setWorkDirectory("/home/gbozsik/");
-
-        dataStorageConfiguration.setStoragePath(IGNITE_PERSISTENCE_FILE_PATH + "/store");
-        dataStorageConfiguration.setWalArchivePath(IGNITE_PERSISTENCE_FILE_PATH + "/walArchive");
-        dataStorageConfiguration.setWalPath(IGNITE_PERSISTENCE_FILE_PATH + "/walStore");
-
-        dataStorageConfiguration.setPageSize(4 * 1024);
-
-        DataRegionConfiguration dataRegionConfiguration = new DataRegionConfiguration();
-        dataRegionConfiguration.setName("dataconf");
-        dataRegionConfiguration.setInitialSize(100L * 1000 * 1000);
-        dataRegionConfiguration.setMaxSize(20000L * 1000 * 1000);
-//        dataRegionConfiguration.setPersistenceEnabled(true);
-        dataStorageConfiguration.setDataRegionConfigurations(dataRegionConfiguration);
-        DataStorageConfiguration dataStorageConfiguration_2 = new DataStorageConfiguration();
-        dataStorageConfiguration_2.setPageSize(4 * 1024);
-        dataStorageConfiguration_2.setDataRegionConfigurations(dataRegionConfiguration);
-        igniteConfiguration.setDataStorageConfiguration(dataStorageConfiguration);
-
-//        CacheConfiguration datasetWrapperCache = getCache("datasetWrapperCache");
-//        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
-
-//        CacheConfiguration employeeCache = new CacheConfiguration("employeeCache");
-//        datasetWrapperCache.setIndexedTypes(Integer.class, EmployeeDTO.class);
-//        igniteConfiguration.setCacheConfiguration(employeeCache);
-
-        ConnectorConfiguration connectorConfiguration = new ConnectorConfiguration();
-        connectorConfiguration.setPort(11211);
-        // common ignite configuration
-        igniteConfiguration.setMetricsLogFrequency(0);
-        igniteConfiguration.setQueryThreadPoolSize(2);
-        igniteConfiguration.setDataStreamerThreadPoolSize(1);
-        igniteConfiguration.setManagementThreadPoolSize(2);
-        igniteConfiguration.setPublicThreadPoolSize(2);
-        igniteConfiguration.setSystemThreadPoolSize(2);
-        igniteConfiguration.setRebalanceThreadPoolSize(1);
-        igniteConfiguration.setAsyncCallbackPoolSize(2);
-        igniteConfiguration.setPeerClassLoadingEnabled(false);
-        BinaryConfiguration binaryConfiguration = new BinaryConfiguration();
-        binaryConfiguration.setCompactFooter(false);
-        igniteConfiguration.setBinaryConfiguration(binaryConfiguration);
+//        IgniteConfiguration igniteConfiguration = new IgniteConfiguration();
+////        CacheConfiguration datasetWrapperCache = getCache("datasetWrapperCache");
+////        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
+//        igniteConfiguration.setClientMode(true);
+//        igniteConfiguration.setIgniteInstanceName("ignite");
+//        TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
+//        TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder();
+//        // need to be changed when it come to real cluster
+//        tcpDiscoveryVmIpFinder.setAddresses(Arrays.asList("192.168.2.29:47500"));
+//        tcpDiscoverySpi.setIpFinder(tcpDiscoveryVmIpFinder);
+//        igniteConfiguration.setDiscoverySpi(tcpDiscoverySpi);
+//
+//        DataStorageConfiguration dataStorageConfiguration = new DataStorageConfiguration();
+//        igniteConfiguration.setWorkDirectory("/home/gbozsik/");
+//
+//        dataStorageConfiguration.setStoragePath(IGNITE_PERSISTENCE_FILE_PATH + "/store");
+//        dataStorageConfiguration.setWalArchivePath(IGNITE_PERSISTENCE_FILE_PATH + "/walArchive");
+//        dataStorageConfiguration.setWalPath(IGNITE_PERSISTENCE_FILE_PATH + "/walStore");
+//
+//        dataStorageConfiguration.setPageSize(4 * 1024);
+//
+//        DataRegionConfiguration dataRegionConfiguration = new DataRegionConfiguration();
+//        dataRegionConfiguration.setName("dataconf");
+//        dataRegionConfiguration.setInitialSize(100L * 1000 * 1000);
+//        dataRegionConfiguration.setMaxSize(20000L * 1000 * 1000);
+////        dataRegionConfiguration.setPersistenceEnabled(true);
+//        dataStorageConfiguration.setDataRegionConfigurations(dataRegionConfiguration);
+//        DataStorageConfiguration dataStorageConfiguration_2 = new DataStorageConfiguration();
+//        dataStorageConfiguration_2.setPageSize(4 * 1024);
+//        dataStorageConfiguration_2.setDataRegionConfigurations(dataRegionConfiguration);
+//        igniteConfiguration.setDataStorageConfiguration(dataStorageConfiguration);
+//
+////        CacheConfiguration datasetWrapperCache = getCache("datasetWrapperCache");
+////        igniteConfiguration.setCacheConfiguration(datasetWrapperCache);
+//
+////        CacheConfiguration employeeCache = new CacheConfiguration("employeeCache");
+////        datasetWrapperCache.setIndexedTypes(Integer.class, EmployeeDTO.class);
+////        igniteConfiguration.setCacheConfiguration(employeeCache);
+//
+//        ConnectorConfiguration connectorConfiguration = new ConnectorConfiguration();
+//        connectorConfiguration.setPort(11211);
+//        // common ignite configuration
+//        igniteConfiguration.setMetricsLogFrequency(0);
+//        igniteConfiguration.setQueryThreadPoolSize(2);
+//        igniteConfiguration.setDataStreamerThreadPoolSize(1);
+//        igniteConfiguration.setManagementThreadPoolSize(2);
+//        igniteConfiguration.setPublicThreadPoolSize(2);
+//        igniteConfiguration.setSystemThreadPoolSize(2);
+//        igniteConfiguration.setRebalanceThreadPoolSize(1);
+//        igniteConfiguration.setAsyncCallbackPoolSize(2);
+//        igniteConfiguration.setPeerClassLoadingEnabled(false);
+//        BinaryConfiguration binaryConfiguration = new BinaryConfiguration();
+//        binaryConfiguration.setCompactFooter(false);
+//        igniteConfiguration.setBinaryConfiguration(binaryConfiguration);
         // cluster tcp configuration
 //        TcpDiscoverySpi tcpDiscoverySpi = new TcpDiscoverySpi();
 //        TcpDiscoveryVmIpFinder tcpDiscoveryVmIpFinder = new TcpDiscoveryVmIpFinder();
@@ -236,7 +237,8 @@ public class IgniteStream {
 //        alertsConfig.setDataRegionName(DATA_CONFIG_NAME);
 //        alertsConfig.setWriteSynchronizationMode(CacheWriteSynchronizationMode.FULL_ASYNC);
 //        igniteConfiguration.setCacheConfiguration(alerts, alertsConfig);
-        return igniteConfiguration;
+//        return igniteConfiguration;
+        return null;
     }
 
 }

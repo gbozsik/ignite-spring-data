@@ -56,10 +56,11 @@ public class DatasetWrapperServiceImpl implements DatasetWrapperService {
         System.out.println("start to read: " + durationOfReadFile);
         LocalDateTime startOfInsert = LocalDateTime.now();
 //        datasetWrapperRepository.save(2L, datasetWrapper);
-        jolConverter.readFromFile("/home/gbozsik/Documents/Artisjus/DeezerWorldwidePremiumPlusStandalone_20160301_20160331_HU_matched.jol");
+        conversionService.streamToCache("line", "filename", 1);
+//        jolConverter.readFromFile("/home/gbozsik/Documents/Artisjus/DeezerWorldwidePremiumPlusStandalone_20160301_20160331_HU_matched.jol");
         Duration durationOfSave = Duration.between(startOfInsert, LocalDateTime.now());
 //        System.out.println(datasetWrapper);
-        System.out.println("duration of save: " + durationOfSave);
+        System.out.println("end of all: " + durationOfSave);
 
 //        employeeDTO = new EmployeeDTO();
 //        employeeDTO.setId(1);
